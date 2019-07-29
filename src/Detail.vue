@@ -107,7 +107,7 @@ button {
   width: 100px;
   height: 100px;
   border-radius: 50%;
-  margin-top: 10px;
+  margin-top: 11px;
   object-fit: cover;
 }
 .text-align {
