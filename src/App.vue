@@ -1,31 +1,44 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+  <div>
+   <router-view></router-view>
+  
+   
+   <!--list></list>
+   <rmap></rmap>
+   <router-view></router-view>
+   <detail></detail>
+   <component is="component"> </component>
+   <rmap></rmap-->
+
   </div>
 </template>
 
+<script>
+import Home from './Home.vue';
+import List from './List.vue';
+import Detail from './Detail.vue';
+import Map from './Map.vue';
+import Chat from './Chat.vue';
+import Login from '@/components/authentication/Login.vue'
+
+export default {
+ components:{
+   'home': Home,
+   'list': List,
+   'detail': Detail,
+   'map' : Map,
+   'chat': Chat,
+   'login': Login
+ },
+ 
+ data(){
+   return {
+     component:'list',
+   }
+ },
+}
+</script>
+
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
 </style>
