@@ -1,14 +1,17 @@
 <template>
-  <div class="navbar nav position-sticky">
+  <div class="navbar nav sticky-top">
     <nav>
         <ul class="row">
-          <li class="col-4">
-            <router-link to="/signup"><span class="glyphicon glyphicon-user"></span></router-link> 
+           <li v-if="user">
+            <a class="chat-useremail"> &nbsp;</a>
           </li>
-          <li class="col-4">
-            <router-link to="/login"><span class="glyphicon glyphicon-log-in"></span></router-link>
+          <li class="">
+            <router-link v-if="!user" to="/signup"><span class="glyphicon glyphicon-user">&nbsp;</span></router-link> 
           </li>
-          <li class="col-4">
+          <li class="">
+            <router-link v-if="!user" to="/login"><span class="glyphicon glyphicon-log-in"></span></router-link>
+          </li>
+          <li v-if="user" class="">
             <a href="#" @click="logout"><span class="glyphicon glyphicon-log-out"></span></a>
           </li>
         </ul>
@@ -20,8 +23,11 @@
 import firebase from "firebase";
 export default {
   name: "ReviewNavBar",
+  props: ["email"],
   data() {
-    return {};
+    return {
+      user: null,
+    };
   },
   methods:{
       logout(){
@@ -29,6 +35,15 @@ export default {
               this.$router.push({name:'Login'})
           })
       }
+  },
+  created(){
+    firebase.auth().onAuthStateChanged((user)=>{
+      if(user){
+        this.user = user
+      } else{
+        this.user = null
+      }
+    })
   }
 };
 </script>
@@ -36,23 +51,32 @@ export default {
 <style>
 nav {
   background-color: orange;
-  height: 80px;
+  height: 30px;
   width: 100%;
-  position: fixed;
-  z-index: 10;
+  left:0;
+}
+.navbar.nav{
+  width: 100%;
+  margin-left:0;
+  margin-top: 0px; 
 }
 
 li{
     display: inline;
     align-items: right;
-    font-size: 1.5em;
     text-align: justify;
+    color: darkcyan;
+    margin-left: 10px;
 }
 .glyphicon{
   color:darkcyan;
+  font-size: 1.5em;
 }
-/* position-sticky{
+.sticky-top{
   position: sticky;
-} */
+}
+li.chat-useremail{
+font-size: 1.0em;
 
+}
 </style>

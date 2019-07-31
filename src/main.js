@@ -10,6 +10,8 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import Chat from './Chat.vue'
 import VueChatScroll from 'vue-chat-scroll'
 
+export const bus = new Vue();
+
 Vue.use(VueChatScroll)
 Vue.use(VueGoogleMaps, {
   load: {

@@ -2,12 +2,11 @@
   <div>
     <review-nav-bar />
     <div class="chat container">
-      <h2 class="center orange-text">Chat</h2>
       <div class="card">
         <div class="card-content">
           <ul class="messages" v-chat-scroll>
-            <li class=" talk-bubble border round tri-right btm-right-in" v-for="message in messages" :key="message.id">
-              <span class="talk-text username">{{ message.username + " "}}</span>
+            <li class=" talk-bubble border round" v-for="message in messages" :key="message.id">
+              <span class="talk-text username">{{ message.email+ " "}}</span>
               <p class="talk-text grey-text text-darken-3">{{message.content}}</p>
               <span class="talk-text grey-text date">{{message.dateStamp}}</span>
             </li>
@@ -15,7 +14,7 @@
         </div>
       </div>
       <div class="card-action">
-        <NewMessage :username="username" />
+        <NewMessage :email="email" />
       </div>
     </div>
      <app-footer></app-footer>
@@ -30,7 +29,7 @@ import ReviewNavBar from "@/components/layout/ReviewNavBar.vue";
 import Footer from "@/components/layout/Footer.vue";
 export default {
   name: "Chat",
-  props: ["username","email"],
+  //props: ["username","email"],
   components: {
     NewMessage,
     ReviewNavBar,
@@ -38,7 +37,8 @@ export default {
   },
   data() {
     return {
-      messages: []
+      messages: [],
+      email: this.$route.params.email,
     };
   },
   created() {
@@ -49,7 +49,7 @@ export default {
           let doc = change.doc;
           this.messages.push({
             id: doc.id,
-            username: doc.data().username,
+            email: doc.data().email,
             content: doc.data().content,
             dateStamp: moment(doc.data().dateStamp).format("LLL")
           });
@@ -65,26 +65,22 @@ li {
   list-style: none;
 }
 
-.chat h2 {
-  font-size: 2.6em;
-  margin-bottom: 10px;
-  color: orange;
-}
-
 .chat .grey-text {
   color: dimgrey;
-  font-size: 1.0em;
+  font-size: 0.8em;
 }
 
 .chat .date {
   display: block;
-  font-size: 0.7em;
+  font-size: 0.6em;
   color: darkgrey;
 }
 
 .messages {
-  max-height: 380px;
+  max-height: 430px;
   overflow: auto;
+  margin-right: 0px;
+  padding-left: 0px;
 }
 
 .messages::-webkit-scrollbar {
@@ -109,10 +105,11 @@ input {
   position: relative;
 	width: 260px;
 	height: auto;
-	background-color: lightgoldenrodyellow;
+	background-color: #ffedcc;
+
 }
 .username{
-  font-size: 0.8em;
+  font-size: 0.6em;
    color: darkcyan;
 }
 .border{
@@ -138,7 +135,7 @@ border: 8px solid #666;
 	border: 20px solid;
 	border-color: #666 #666 transparent transparent;
 }*/
-.tri-right.btm-right-in:after{
+/*.tri-right.btm-right-in:after{
 	content: ' ';
 	position: absolute;
 	width: 0;
@@ -148,5 +145,5 @@ border: 8px solid #666;
 	bottom: -20px;
 	border: 12px solid;
 	border-color: lightyellow lightyellow transparent transparent;
-}
+}*/
 </style>

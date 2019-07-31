@@ -18,7 +18,7 @@
 </template>
 
 <script>
-//import {bus} from "./main.js";
+
 export default {
   data() {
     return {
@@ -100,7 +100,7 @@ img{
 .continer{
     display: grid;
     grid-template-columns: 1fr 2fr 1fr;
-    grid-template-rows: 30% 40% auto;
+    grid-template-rows: 10% 40% auto;
     width: 100%;
     height: 100vh;
     /*grid-gap: 10px;*/

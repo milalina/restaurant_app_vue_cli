@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div >
     <header class="sticky-top">
       <div id="checkboxes">
         <label for>
@@ -26,28 +26,16 @@
         <input v-model="categories" type="checkbox" value="1" name id />
       </div>
     </header>
+  
+    <div class="container">
     <div class="feedback" >
     <p class="feedback" v-if="feedback"> {{feedback}} </p>
     </div>
     <div class="row">
     <div v-for="(restaurant, index) in restaurantsListSorted" :key="index" class="card col-12 col-sm-6 col-md-4 col-lg-3">
-      <img v-bind:src="restaurant.restaurant.featured_image" style="width:100%" />
+       <router-link v-bind:to="'/detail/'+restaurant.restaurant.id "><img v-bind:src="restaurant.restaurant.featured_image" style="width:100%"/></router-link>
       <div class="container">
-        <div class="row">
-          <div class="col-9">
-          <h2 class="heading">{{ restaurant.restaurant.name }}</h2>
-          </div>
-          <div class="col-3">
-            <a
-              href="#"
-              v-on:click="passParam(restaurant.restaurant.location.latitude, 
-        restaurant.restaurant.location.longitude, 
-        restaurant.restaurant.location.address)"
-            >
-              <span class="glyphicon glyphicon-map-marker"></span>
-              </a>
-          </div>
-        </div>
+           <router-link v-bind:to="'/detail/'+restaurant.restaurant.id "><h2 class="heading">{{ restaurant.restaurant.name }}</h2></router-link>
         <div class="row">
           <div class="col-3">
             <p>
@@ -61,11 +49,16 @@
               for two: {{ restaurant.restaurant.average_cost_for_two }}
             </p>
           </div>
-          <div class="col-3">
-            <router-link v-bind:to="'/detail/'+restaurant.restaurant.id ">
-            <span class="glyphicon glyphicon-pencil"></span>
-            <span class="glyphicon glyphicon-picture"></span>
-            </router-link>
+             <div class="col-3">
+            <a
+              href="#"
+              v-on:click="passParam(restaurant.restaurant.location.latitude, 
+        restaurant.restaurant.location.longitude, 
+        restaurant.restaurant.location.address)"
+            >
+              <span class="glyphicon glyphicon-map-marker"></span>
+              </a>
+          
           </div>
         </div>
         <p>
@@ -74,6 +67,7 @@
         </p>
       </div>
       </div>
+    </div>
     </div>
     <app-footer></app-footer>
   </div>
@@ -100,18 +94,16 @@ export default {
       latitude: "",
       longitude: "",
       feedback: null,
+      image: require('@/assets/cloche.jpg')
     };
   },
-
-  props: ["borough"],
-
   methods: {
     creating_Url_location: function() {
       this.url =
         "https://developers.zomato.com/api/v2.1/locations?query=" +
         this.$route.params.borough +
         "20%London";
-      console.log("1");
+      this.borough = this.$route.params.borough
       this.fetchingDataParam();
     },
 
@@ -132,7 +124,6 @@ export default {
               data.locationSuggestion[0].entity_id,
               data.locationSuggestion[0].entity_type
             );
-          console.log("2");
         })
         .catch(function(error) {
           console.log(error);
@@ -148,7 +139,6 @@ export default {
         "";
       console.log(this.urlEst);
       this.fetchingDataList(this.urlEst);
-      console.log("3");
     },
 
     fetchingDataList: function() {
@@ -166,12 +156,21 @@ export default {
           console.log(data),
             (this.restaurantsList = data.best_rated_restaurant);
           console.log(this.restaurantsList);
-          console.log("4");
+          this.addDefaultImage()
         })
         .catch(function(error) {
           console.log(error);
         });
     },
+
+    addDefaultImage(){
+      this.restaurantsList.map(oneRestaurant => {
+      if (oneRestaurant.restaurant.featured_image == "") {
+      oneRestaurant.restaurant.featured_image =this.image
+      }
+      })
+    },
+  
     passParam: function(latitude, longitude, address) {
       this.$router.push({
         name: "map",
@@ -236,7 +235,7 @@ export default {
 header{
   position: relative;
   
-  top: 8px;
+  top: 0px;
   /*left: 10px;
   left: 3%;*/
   width: 100%;
@@ -261,9 +260,15 @@ app-footer{
   position: absolute;
   margin-bottom: 0px;
 }
-.container-fluid{
+.glyphicon{
+  font-size: 1.4em;
+}
+.container{
   width: 100%;
   height: 100%;
-  /*height: 100vh*/;
+  margin-bottom: 40px;
+  /*height: 100vh
+  <img src="./assets/food_icon.jpg" />
+  */;
 }
 </style>

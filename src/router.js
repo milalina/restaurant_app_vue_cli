@@ -7,10 +7,11 @@ import Map from './Map.vue';
 import Chat from './Chat.vue'
 import Signup from '@/components/authentication/Signup.vue'
 import Login from '@/components/authentication/Login.vue'
+import firebase from 'firebase'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
@@ -36,14 +37,12 @@ export default new Router({
       props: true
     },
    {
-      path: '/chat',
+      path: '/chat/:email',
       name: 'Chat',
       component: Chat,
       props: true,
-      beforeEnter: (to, from, next)=>{
-        if(to.params.username || to.params.email){
-          next()
-        }else{ next:({name:'Signup'})}
+      meta:{
+        requiresAuth: true
       }
     },
     {
@@ -58,3 +57,18 @@ export default new Router({
     }
   ]
 })
+
+router.beforeEach((to, from, next)=>{
+  if(to.matched.some(rec=>rec.meta.requiresAuth)){
+    let user = firebase.auth().currentUser
+    if(user){
+      next({})
+    }else{
+    next({path:'/signup'})
+    }
+  }else{
+    next()
+  }
+})
+
+export default router 

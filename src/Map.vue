@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="container">
     <header>
     <h3 class="address"> <span class="glyphicon glyphicon-map-marker"></span>{{this.address}}</h3>
@@ -18,7 +19,8 @@
           />
         </GmapMap>
     </div>
-    <app-footer></app-footer>
+  </div>
+  <app-footer></app-footer>
   </div>
 </template>
 
@@ -61,48 +63,49 @@ header{
   color: darkcyan;
 }
 
-.vue-map-container{
+/*.vue-map-container{
   width: 150px;
   height: 500px;
-}
+}*/
 /*iPhone*/
 @media (min-height: 568px) and (orientation: portrait){
   .vue-map-container{
-  width: 290px;
-  height: 420px;
+  width: 290px !important;
+  height: 420px !important;
 
 }
 @media (min-width: 568px) and (orientation: landscape){
   .vue-map-container{
-  width: 540px;
-  height: 200px;
+  width: 540px !important;
+  height: 200px !important;
 }
 }
 /*Galaxy s5*/
 }
 @media (min-height: 640px) and (orientation: portrait){
   .vue-map-container{
-  width: 330px;
-  height: 500px;
+  width: 330px !important;
+  height: 500px !important;
 }
 }
 @media (min-width: 639px) and (orientation: landscape){
   .vue-map-container{
-  width: 510px ;
-  height: 220px ;
+  width: 550px !important;
+  height: 270px !important;
+  
 }
 }
 /*iPad*/
 @media (min-height: 1024px) and (orientation: portrait){
   .vue-map-container{
-  width: 700px;
-  height: 900px;
+  width: 700px !important;
+  height: 900px !important;
 }
 }
 @media (min-width: 1024px) and (orientation: landscape){
   .vue-map-container{
-  width: 930px ;
-  height: 640px ;
+  width: 930px !important;
+  height: 640px !important;
 }
 }
 

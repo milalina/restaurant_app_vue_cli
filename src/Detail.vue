@@ -1,7 +1,7 @@
 <template>
+<div>
+   <review-nav-bar/>
   <div class="container">
-    <review-nav-bar />
-    <div>
       <h2 class="heading">
         <b>{{ restaurantName }}</b>
       </h2>
@@ -29,8 +29,8 @@
         </div>
       </div>
       </div>
-      <app-footer></app-footer>
-    </div>
+  </div>
+  <app-footer></app-footer>
   </div>
 </template>
 
@@ -116,7 +116,7 @@ button {
 img{
 margin-top: 5px;
 }
-review-nav-bar{
-  position: fixed;
+.container{
+  margin-bottom: 30px;
 }
 </style>
